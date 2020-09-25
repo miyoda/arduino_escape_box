@@ -4,7 +4,7 @@
 #include <LiquidCrystal.h>
 #include <string.h>
 #include "../outputs/serial.h"
-#include "../utils.h"
+#include "../utils/str_utils.h"
 
 using namespace std;  
 
@@ -92,7 +92,6 @@ int schedule_lcd_line0(struct pt *pt) {
     strcpy(currentContent, line0Text);
     if (strlen(currentContent) <= LCD_WIDTH) {
       lcdPrintFullLine(0, currentContent);
-      PT_SLEEP(pt, 10000);
       PT_WAIT_UNTIL(pt, strcmp(line0Text, currentContent));
     } else {
       scrollPos = 1-LCD_WIDTH;

@@ -24,8 +24,7 @@ void playNote(int note) {
 }
 
 void stopBuzzer() {
-  Serial.println("play melody");
-  playMelody(MELODY_SILENT);
+  melody = MELODY_SILENT;
   noTone(PIN_ACTIVE_BUZZER);
 }
 

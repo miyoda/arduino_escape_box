@@ -3,8 +3,8 @@
 
 int const PIN_BUTTON1 = 53;
 
-int getButton1() {
-  digitalRead(PIN_BUTTON1);
+int checkButton1() {
+  return digitalRead(PIN_BUTTON1) == LOW;
 }
 
 void setup_buttons() {

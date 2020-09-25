@@ -105,7 +105,7 @@ static Melody MELODY_SILENT = {
   .length = 0
 };
 
-static Melody MELODY_SCALE = {
+static Melody MELODY_INIT = {
   .notes = {NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5, NOTE_A5, NOTE_B5, NOTE_C6},
   .durations = {200, 200, 200, 200, 200, 200, 200, 200},
   .length = 8
