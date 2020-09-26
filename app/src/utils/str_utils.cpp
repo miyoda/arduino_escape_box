@@ -1,5 +1,5 @@
-#include "protothreads.h"
-#include "Arduino.h"
+#include <protothreads.h>
+#include <Arduino.h>
 #include "str_utils.h"
 
 char *subString(const char *g, int start, int size) {

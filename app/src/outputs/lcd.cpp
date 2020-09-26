@@ -1,6 +1,6 @@
-#include "protothreads.h"
+#include <protothreads.h>
 #include "lcd.h"
-#include "Arduino.h"
+#include <Arduino.h>
 #include <LiquidCrystal.h>
 #include <string.h>
 #include "../outputs/serial.h"

@@ -1,6 +1,6 @@
-#include "protothreads.h"
+#include <protothreads.h>
 #include "buzzer.h"
-#include "Arduino.h"
+#include <Arduino.h>
 
 // TODO use RTTTL melodies https://github.com/cefn/non-blocking-rtttl-arduino
 

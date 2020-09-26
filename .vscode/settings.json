@@ -17,6 +17,8 @@
     "chrono": "cpp",
     "__locale": "cpp",
     "__string": "cpp",
-    "algorithm": "cpp"
+    "algorithm": "cpp",
+    "bitset": "cpp",
+    "utility": "cpp"
   }
 }

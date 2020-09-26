@@ -1,6 +1,6 @@
-#include "protothreads.h"
+#include <protothreads.h>
 #include "game.h"
-#include "Arduino.h"
+#include <Arduino.h>
 #include "outputs/lcd.h"
 #include "outputs/buzzer.h"
 #include "outputs/led_rgb.h"

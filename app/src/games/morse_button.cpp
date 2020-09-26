@@ -1,5 +1,5 @@
-#include "protothreads.h"
-#include "Arduino.h"
+#include <protothreads.h>
+#include <Arduino.h>
 #include "morse_button.h"
 #include "../game.h"
 #include "../outputs/lcd.h"
@@ -10,7 +10,7 @@
 #include "../utils/morse.h"
 
 static struct pt pt_morse_button, pt_morse_finish_alphabet, pt_morse_finish_game;
-static bool morse_button_won = false;
+static bool morse_button_passed = false;
 static char currentWord[7] = "";
 static char currentMorseCode[6] = "";
 static int t1, t2;
@@ -22,8 +22,8 @@ void setup_morse_button() {
   PT_INIT(&pt_morse_finish_game);
 }
 
-bool is_morse_button_won() {
-  return morse_button_won;
+bool is_morse_button_passed() {
+  return morse_button_passed;
 }
 
 char readio(int signal_len) {
@@ -73,7 +73,7 @@ int schedule_morse_finish_game(struct pt *pt) {
     if (strcmp(currentWord, "SOS") == 0) {
       playMelody(MELODY_SUCCESS);
       led_array_set(0, HIGH);
-      morse_button_won = true;
+      morse_button_passed = true;
     } else {
       playMelody(MELODY_FAILURE);
     }
@@ -86,7 +86,7 @@ int schedule_morse_finish_game(struct pt *pt) {
 }
 
 void loop_morse_button() {
-  if (!morse_button_won) {
+  if (!morse_button_passed) {
     PT_SCHEDULE(schedule_morse_button(&pt_morse_button));
     PT_SCHEDULE(schedule_morse_finish_alphabet(&pt_morse_finish_alphabet));
     PT_SCHEDULE(schedule_morse_finish_game(&pt_morse_finish_game));

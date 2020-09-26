@@ -1,7 +1,7 @@
-#include "protothreads.h"
-#include "Arduino.h"
+#include <protothreads.h>
+#include <Arduino.h>
 
-int const PIN_BUTTON1 = 53;
+int const PIN_BUTTON1 = 47;
 
 int checkButton1() {
   return digitalRead(PIN_BUTTON1) == LOW;
