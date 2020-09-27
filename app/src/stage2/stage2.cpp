@@ -13,7 +13,6 @@
 static struct pt pt_stage2_status; 
 
 void setup_stage2() {
-  Serial.println("DEBUG setup_stage2");
   PT_INIT(&pt_stage2_status);
 
   setup_simon_dice();

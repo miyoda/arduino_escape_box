@@ -10,14 +10,13 @@
 #include "../outputs/led_simon.h"
 
 
-static int const SIMON_DICE_LENGTH = 4;
+static int const SIMON_DICE_LENGTH = 15;
 static struct pt pt_simon_dice,pt_simon_dice_finish_game;
 static bool simon_dice_passed = false;
 static int currentSimonDiceCode[SIMON_DICE_LENGTH];
 static unsigned long timeToFinishGame = 0;
 
 void setRandomSimonDiceCode() {
-  Serial.println("DEBUG setRandomSimonDiceCode");
   for (int i=0; i<SIMON_DICE_LENGTH; i++) {
     currentSimonDiceCode[i] = rand()%4;
     Serial.println(currentSimonDiceCode[i]);
@@ -51,9 +50,6 @@ int getNoteOfLed(int led) {
 }
 
 int getJoystickLed(int joystickX, int joystickY) {
-    Serial.println("DEBUG getJoystickLed joystick:");
-    Serial.println(joystickX);
-    Serial.println(joystickY);
   if ((joystickX > 500 && joystickX < 524) ||
     (joystickY > 500 && joystickY < 524)
   ) {
@@ -90,7 +86,6 @@ int schedule_simon_dice(struct pt *pt) {
   for(;;) {
     Serial.println(getJoystickSw());
     PT_WAIT_UNTIL(pt, getJoystickSw() == LOW);
-    Serial.println("DEBUG schedule_simon_dice START");
     setRandomSimonDiceCode();
     fail = false;
     for (i=0; i<SIMON_DICE_LENGTH && !fail; i++) {
@@ -103,8 +98,9 @@ int schedule_simon_dice(struct pt *pt) {
         PT_SLEEP(pt, 200);
       }
       for (j=0; j<=i && !fail; j++) {
-        timeToFinishGame = millis() + 4000;
+        timeToFinishGame = millis() + 3000;
         PT_WAIT_UNTIL(pt, (currentSimonLed = getJoystickLed(getJoystickX(), getJoystickY())) != -1);
+        timeToFinishGame = 0;
         led_simon_set(currentSimonLed, HIGH);
         playNote(getNoteOfLed(currentSimonLed));
         PT_SLEEP(pt, 500);

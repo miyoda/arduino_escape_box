@@ -6,9 +6,12 @@
 #include "outputs/led_rgb.h"
 #include "outputs/led_array.h"
 #include "stageX/keyboard_pin.h"
+#include "stageX/rotation_alert.h"
 #include "stage1/stage1.h"
 #include "stage2/stage2.h"
 #include "stage3/stage3.h"
+#include "stage4/stage4.h"
+#include "stage_win/stage_win.h"
 
 static struct pt pt_game_time; 
 
@@ -27,6 +30,8 @@ void resetDefaultLcdText() {
     setLcdLine0Text("Stage 3");
   } else if (currentStage == STAGE4) {
     setLcdLine0Text("Stage 4");
+  } else if (currentStage == STAGE_WIN) {
+    setLcdLine0Text("You win!");
   }
 }
 
@@ -40,7 +45,9 @@ void setCurrentStage(GameStage gameStage) {
   } else if (currentStage == STAGE3) {
     setup_stage3();
   } else if (currentStage == STAGE4) {
-    
+    setup_stage4();
+  } else if (currentStage == STAGE_WIN) {
+    setup_stage_win();
   }
 }
 
@@ -48,11 +55,12 @@ void setup_game() {
   PT_INIT(&pt_game_time);
 
   setup_keyboard_pin();
+  setup_rotation_alert();
 
   pinMode(LED_BUILTIN, OUTPUT);
 
   playMelody(MELODY_INIT);
-  setCurrentStage(STAGE2); // TODO DEBUG
+  setCurrentStage(STAGE1);
 }
 
 void getFormatedTime(char *text) {
@@ -83,11 +91,16 @@ void loop_game() {
   PT_SCHEDULE(schedule_game_time(&pt_game_time));
 
   loop_keyboard_pin();
+  loop_rotation_alert();
   if (currentStage == STAGE1) {
     loop_stage1();
   } else if (currentStage == STAGE2) {
     loop_stage2();
   } else if (currentStage == STAGE3) {
     loop_stage3();
+  } else if (currentStage == STAGE4) {
+    loop_stage4();
+  } else if (currentStage == STAGE_WIN) {
+    loop_stage_win();
   }
 }

@@ -7,6 +7,7 @@
 #include "src/outputs/buzzer.h"
 #include "src/inputs/buttons.h"
 #include "src/inputs/rfid.h"
+#include "src/inputs/mpu.h"
 #include "src/inputs/keypad_abcd09.h"
 #include "src/game.h"
 
@@ -23,6 +24,7 @@ void setup() {
   // setup inputs
   setup_buttons();
   setup_rfid();
+  setup_mpu();
   setup_keypad_abcd09();
 
   setup_game();
@@ -41,6 +43,7 @@ void loop() {
   // loop inputs
   loop_rfid();
   loop_buttons();
+  loop_mpu();
   loop_keypad_abcd09();
 
   loop_game();

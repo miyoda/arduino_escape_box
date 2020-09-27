@@ -76,6 +76,8 @@ int schedule_keyboard_pin(struct pt *pt) {
         setCurrentStage(STAGE3);
       } else if (isPin("*0004")) {
         setCurrentStage(STAGE4);
+      } else if (isPin("*0005")) {
+        setCurrentStage(STAGE_WIN);
       } else {
         playMelody(MELODY_FAILURE);
       }
