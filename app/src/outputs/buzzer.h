@@ -111,6 +111,12 @@ static Melody MELODY_INIT = {
   .length = 8
 };
 
+static Melody MELODY_KEY_PRESS = {
+  .notes = {NOTE_E4},
+  .durations = {100},
+  .length = 1
+};
+
 static Melody MELODY_FAILURE = {
   .notes = {NOTE_E3, NOTE_D3, NOTE_C3, NOTE_E2},
   .durations = {200, 200, 200, 300},

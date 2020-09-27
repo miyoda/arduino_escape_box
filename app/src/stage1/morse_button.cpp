@@ -9,7 +9,7 @@
 #include "../utils/str_utils.h"
 #include "../utils/morse.h"
 
-static struct pt pt_morse_button, pt_morse_finish_alphabet, pt_morse_finish_game;
+static struct pt pt_morse_button, pt_morse_button_finish_alphabet, pt_morse_button_finish_game;
 static bool morse_button_passed = false;
 static char currentWord[7] = "";
 static char currentMorseCode[6] = "";
@@ -18,8 +18,8 @@ static unsigned long timeToFinishAlphabet = 0, timeToFinishGame = 0;
 
 void setup_morse_button() {
   PT_INIT(&pt_morse_button);
-  PT_INIT(&pt_morse_finish_alphabet);
-  PT_INIT(&pt_morse_finish_game);
+  PT_INIT(&pt_morse_button_finish_alphabet);
+  PT_INIT(&pt_morse_button_finish_game);
 }
 
 bool is_morse_button_passed() {
@@ -37,10 +37,10 @@ char readio(int signal_len) {
 int schedule_morse_button(struct pt *pt) {
   PT_BEGIN(pt);
   for(;;) {
-    PT_WAIT_UNTIL(pt, checkButton1());
+    PT_WAIT_UNTIL(pt, getButton1());
     playNote(NOTE_E5);
     t1 = millis();
-    PT_WAIT_UNTIL(pt, !checkButton1());
+    PT_WAIT_UNTIL(pt, !getButton1());
     stopBuzzer();
     t2 = millis();
     Serial.print(readio(t2-t1));
@@ -51,7 +51,7 @@ int schedule_morse_button(struct pt *pt) {
   PT_END(pt);
 }
 
-int schedule_morse_finish_alphabet(struct pt *pt) {
+int schedule_morse_button_finish_alphabet(struct pt *pt) {
   PT_BEGIN(pt);
   for(;;) {
     PT_WAIT_UNTIL(pt, timeToFinishAlphabet != 0 && millis() > timeToFinishAlphabet);
@@ -59,20 +59,19 @@ int schedule_morse_finish_alphabet(struct pt *pt) {
     strcat(currentWord, morse_to_char(currentMorseCode));
     strcpy(currentMorseCode, "");
     setLcdLine0Text(currentWord);
-    PT_WAIT_UNTIL(pt, checkButton1());
+    PT_WAIT_UNTIL(pt, getButton1());
   }
   PT_END(pt);
 }
 
-int schedule_morse_finish_game(struct pt *pt) {
+int schedule_morse_button_finish_game(struct pt *pt) {
   PT_BEGIN(pt);
   for(;;) {
     PT_WAIT_UNTIL(pt, timeToFinishGame != 0 && (strlen(currentWord) >= 3 || millis() > timeToFinishGame));
     PT_SLEEP(pt, 1000);
-    setLcdLine0Text(STAGE1_LCD_TEXT);
+    resetDefaultLcdText();
     if (strcmp(currentWord, "SOS") == 0) {
       playMelody(MELODY_SUCCESS);
-      led_array_set(0, HIGH);
       morse_button_passed = true;
     } else {
       playMelody(MELODY_FAILURE);
@@ -88,7 +87,7 @@ int schedule_morse_finish_game(struct pt *pt) {
 void loop_morse_button() {
   if (!morse_button_passed) {
     PT_SCHEDULE(schedule_morse_button(&pt_morse_button));
-    PT_SCHEDULE(schedule_morse_finish_alphabet(&pt_morse_finish_alphabet));
-    PT_SCHEDULE(schedule_morse_finish_game(&pt_morse_finish_game));
+    PT_SCHEDULE(schedule_morse_button_finish_alphabet(&pt_morse_button_finish_alphabet));
+    PT_SCHEDULE(schedule_morse_button_finish_game(&pt_morse_button_finish_game));
   }
 }

@@ -33,11 +33,7 @@ void setup_led_array() {
 void digitalWriteLed(int pos, int newStatus) {
   Serial.print("digitalWriteLed "); Serial.print(pos); Serial.print("="); Serial.println(newStatus);
   currentLedArrayStatus[pos] = newStatus;
-  if (newStatus == HIGH || newStatus == LOW) {
-    digitalWrite(PIN_LED_ARRAY[pos], newStatus);
-  } else {
-    analogWrite(PIN_LED_ARRAY[pos], newStatus);
-  }
+  digitalWrite(PIN_LED_ARRAY[pos], newStatus);
 }
 
 void digitalWriteLedArray(int status0, int status1, int status2, int status3) {
