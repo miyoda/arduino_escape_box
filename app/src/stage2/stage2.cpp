@@ -7,6 +7,7 @@
 #include "../outputs/led_array.h"
 #include "stage2.h"
 #include "simon_dice.h"
+#include "rfid_identify_card.h"
 #include "../stageX/keyboard_pin.h"
 
 
@@ -16,6 +17,7 @@ void setup_stage2() {
   PT_INIT(&pt_stage2_status);
 
   setup_simon_dice();
+  setup_rfid_identify_card();
 }
 
 int schedule_stage2_status(struct pt *pt) {
@@ -23,16 +25,19 @@ int schedule_stage2_status(struct pt *pt) {
   led_array_showAnimation(2000);
   led_array_set(0, LOW); // TODO ir_code
   led_array_set(1, LOW); // TODO tarjeta_rfid
-  led_array_set(2, LOW); // TODO cable_union
+  led_array_set(2, LOW); // TODO wire_bonding
   led_array_set(3, LOW); // simon_dice
   
   for(;;) {
     PT_SLEEP(pt, 1000);
-    // TODO 3 leds
+    bool allOk = true;
     if (is_simon_dice_passed()) {
-      led_array_set(3, HIGH);
+      led_array_set(0, HIGH);
+    } else {
+      allOk = false;
     }
-    if (is_simon_dice_passed()) { // TODO 3 leds
+    // TODO 3 leds (IR + cable-join + rfid card)
+    if (allOk) { // TODO 3 leds
       PT_SLEEP(pt, 1000);
       setCurrentStage(STAGE3);
     }
@@ -43,6 +48,7 @@ int schedule_stage2_status(struct pt *pt) {
 
 void loop_stage2() {
   loop_simon_dice();
+  loop_rfid_identify_card();
 
   PT_SCHEDULE(schedule_stage2_status(&pt_stage2_status));
 }

@@ -12,7 +12,7 @@ int getButton1() {
 }
 
 int getJoystickSw() {
-  return digitalRead(PIN_JOYSTICK_SW);
+  return digitalRead(PIN_JOYSTICK_SW) == LOW;
 }
 
 int getJoystickX() {

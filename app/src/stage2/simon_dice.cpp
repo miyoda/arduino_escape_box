@@ -84,8 +84,7 @@ int schedule_simon_dice(struct pt *pt) {
   static bool fail;
   PT_BEGIN(pt);
   for(;;) {
-    Serial.println(getJoystickSw());
-    PT_WAIT_UNTIL(pt, getJoystickSw() == LOW);
+    PT_WAIT_UNTIL(pt, getJoystickSw());
     setRandomSimonDiceCode();
     fail = false;
     for (i=0; i<SIMON_DICE_LENGTH && !fail; i++) {
