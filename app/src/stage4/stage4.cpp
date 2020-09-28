@@ -3,6 +3,7 @@
 #include <Arduino.h>
 #include "../inputs/buttons.h"
 #include "../inputs/rfid.h"
+#include "../inputs/mic.h"
 #include "../outputs/lcd.h"
 #include "../outputs/buzzer.h"
 #include "../outputs/led_rgb.h"
@@ -32,20 +33,20 @@ int schedule_stage4_status(struct pt *pt) {
       led_array_set(0, LOW);
     }
 
-    if (false) {
+    Serial.println(getMicDigital());
+    Serial.println(getMicAnalog());
+    if (getMicDigital()) {
       led_array_set(1, HIGH);
     } else {
       allOk = false;
       led_array_set(1, LOW);
     }
-
-    if (false) {
+    if (false) { // TODO led orientation N?
       led_array_set(2, HIGH);
     } else {
       allOk = false;
       led_array_set(2, LOW);
     }
-
     if (getJoystickSw() == LOW) {
       led_array_set(3, HIGH);
     } else {

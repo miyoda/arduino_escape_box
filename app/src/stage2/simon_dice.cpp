@@ -14,7 +14,7 @@ static int const SIMON_DICE_LENGTH = 15;
 static struct pt pt_simon_dice,pt_simon_dice_finish_game;
 static bool simon_dice_passed = false;
 static int currentSimonDiceCode[SIMON_DICE_LENGTH];
-static unsigned long timeToFinishGame = 0;
+static unsigned long timeToFinishSimonDiceGame = 0;
 
 void setRandomSimonDiceCode() {
   for (int i=0; i<SIMON_DICE_LENGTH; i++) {
@@ -50,19 +50,19 @@ int getNoteOfLed(int led) {
 }
 
 int getJoystickLed(int joystickX, int joystickY) {
-  if ((joystickX > 500 && joystickX < 524) ||
-    (joystickY > 500 && joystickY < 524)
+  if ((joystickX > 490 && joystickX < 534) ||
+    (joystickY > 490 && joystickY < 534)
   ) {
     return -1;
   }
-  if (joystickX < 500) {
-    if (joystickY < 500) {
+  if (joystickX < 512) {
+    if (joystickY < 512) {
       return 0;
     } else {
       return 1;
     }
   } else {
-    if (joystickY < 500) {
+    if (joystickY < 512) {
       return 2;
     } else {
       return 3;
@@ -73,7 +73,7 @@ int getJoystickLed(int joystickX, int joystickY) {
 
 
 void failGame() {
-  timeToFinishGame = 0;
+  timeToFinishSimonDiceGame = 0;
   resetDefaultLcdText();
   playMelody(MELODY_FAILURE);
 }
@@ -98,9 +98,9 @@ int schedule_simon_dice(struct pt *pt) {
         PT_SLEEP(pt, 200);
       }
       for (j=0; j<=i && !fail; j++) {
-        timeToFinishGame = millis() + 3000;
+        timeToFinishSimonDiceGame = millis() + 3000;
         PT_WAIT_UNTIL(pt, (currentSimonLed = getJoystickLed(getJoystickX(), getJoystickY())) != -1);
-        timeToFinishGame = 0;
+        timeToFinishSimonDiceGame = 0;
         led_simon_set(currentSimonLed, HIGH);
         playNote(getNoteOfLed(currentSimonLed));
         PT_SLEEP(pt, 500);
@@ -112,6 +112,7 @@ int schedule_simon_dice(struct pt *pt) {
           failGame();
         }
       }
+      PT_SLEEP(pt, 600);
     }
     if (!fail) {
       playMelody(MELODY_SUCCESS);
@@ -125,7 +126,7 @@ int schedule_simon_dice(struct pt *pt) {
 int schedule_simon_dice_finish_game(struct pt *pt) {
   PT_BEGIN(pt);
   for(;;) {
-    PT_WAIT_UNTIL(pt, timeToFinishGame != 0 && millis() > timeToFinishGame);
+    PT_WAIT_UNTIL(pt, timeToFinishSimonDiceGame != 0 && millis() > timeToFinishSimonDiceGame);
     failGame();
     PT_RESTART(&pt_simon_dice);
   }

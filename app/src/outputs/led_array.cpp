@@ -10,16 +10,16 @@ int const NUM_LEDS = sizeof(PIN_LED_ARRAY) / sizeof(PIN_LED_ARRAY[0]);
 
 int ledArrayStatus[] {LOW, LOW, LOW, LOW};
 int currentLedArrayStatus[] = {LOW, LOW, LOW, LOW};
-int showAnimationUntil = 0;
+unsigned long showAnimationUntil = 0;
 
 void led_array_set(int pos, int status) {
-  Serial.print("led array["); Serial.print(pos); Serial.print("] = "); Serial.println(status);
+  //Serial.print("led array["); Serial.print(pos); Serial.print("] = "); Serial.println(status);
   ledArrayStatus[pos] = status;
 }
 
 void led_array_showAnimation(int durationMillis) {
   showAnimationUntil = millis() + durationMillis;
-  Serial.print("led array animation until "); Serial.println(showAnimationUntil);
+  //Serial.print("led array animation until "); Serial.println(showAnimationUntil);
 }
 
 void setup_led_array() {
@@ -31,13 +31,13 @@ void setup_led_array() {
 }
 
 void digitalWriteLed(int pos, int newStatus) {
-  Serial.print("digitalWriteLed "); Serial.print(pos); Serial.print("="); Serial.println(newStatus);
+  //Serial.print("digitalWriteLed "); Serial.print(pos); Serial.print("="); Serial.println(newStatus);
   currentLedArrayStatus[pos] = newStatus;
   digitalWrite(PIN_LED_ARRAY[pos], newStatus);
 }
 
 void digitalWriteLedArray(int status0, int status1, int status2, int status3) {
-  Serial.println("digitalWriteLedArray");
+  //Serial.println("digitalWriteLedArray");
   digitalWriteLed(0, status0);
   digitalWriteLed(1, status1);
   digitalWriteLed(2, status2);

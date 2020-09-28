@@ -13,8 +13,8 @@ static struct pt pt_morse_button, pt_morse_button_finish_alphabet, pt_morse_butt
 static bool morse_button_passed = false;
 static char currentWord[7] = "";
 static char currentMorseCode[6] = "";
-static int t1, t2;
-static unsigned long timeToFinishAlphabet = 0, timeToFinishGame = 0;
+static unsigned long t1, t2;
+static unsigned long timeToFinishMorseButtonAlphabet = 0, timeToFinishMorseButtonGame = 0;
 
 void setup_morse_button() {
   PT_INIT(&pt_morse_button);
@@ -45,8 +45,8 @@ int schedule_morse_button(struct pt *pt) {
     t2 = millis();
     Serial.print(readio(t2-t1));
     append(currentMorseCode, readio(t2-t1));
-    timeToFinishAlphabet = millis() + 600;
-    timeToFinishGame = millis() + 5000;
+    timeToFinishMorseButtonAlphabet = millis() + 600;
+    timeToFinishMorseButtonGame = millis() + 5000;
   }
   PT_END(pt);
 }
@@ -54,8 +54,8 @@ int schedule_morse_button(struct pt *pt) {
 int schedule_morse_button_finish_alphabet(struct pt *pt) {
   PT_BEGIN(pt);
   for(;;) {
-    PT_WAIT_UNTIL(pt, timeToFinishAlphabet != 0 && millis() > timeToFinishAlphabet);
-    timeToFinishAlphabet = 0;
+    PT_WAIT_UNTIL(pt, timeToFinishMorseButtonAlphabet != 0 && millis() > timeToFinishMorseButtonAlphabet);
+    timeToFinishMorseButtonAlphabet = 0;
     strcat(currentWord, morse_to_char(currentMorseCode));
     strcpy(currentMorseCode, "");
     setLcdLine0Text(currentWord);
@@ -67,7 +67,7 @@ int schedule_morse_button_finish_alphabet(struct pt *pt) {
 int schedule_morse_button_finish_game(struct pt *pt) {
   PT_BEGIN(pt);
   for(;;) {
-    PT_WAIT_UNTIL(pt, timeToFinishGame != 0 && (strlen(currentWord) >= 3 || millis() > timeToFinishGame));
+    PT_WAIT_UNTIL(pt, timeToFinishMorseButtonGame != 0 && (strlen(currentWord) >= 3 || millis() > timeToFinishMorseButtonGame));
     PT_SLEEP(pt, 1000);
     resetDefaultLcdText();
     if (strcmp(currentWord, "SOS") == 0) {
@@ -76,8 +76,8 @@ int schedule_morse_button_finish_game(struct pt *pt) {
     } else {
       playMelody(MELODY_FAILURE);
     }
-    timeToFinishAlphabet = 0;
-    timeToFinishGame = 0;
+    timeToFinishMorseButtonAlphabet = 0;
+    timeToFinishMorseButtonGame = 0;
     strcpy(currentWord, "");
     strcpy(currentMorseCode, "");
   }

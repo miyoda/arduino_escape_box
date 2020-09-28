@@ -82,17 +82,6 @@ int schedule_keyboard_pin(struct pt *pt) {
         playMelody(MELODY_FAILURE);
       }
     }
-    /*if (get_keypad_abcd09_key() == FIRST_LETTER) {
-      
-      PT_WAIT_UNTIL(pt, !getButton1());
-    }
-    PT_WAIT_UNTIL(pt, !getButton1());
-    stopBuzzer();
-    t2 = millis();
-    Serial.print(readio(t2-t1));
-    append(currentMorseCode, readio(t2-t1));
-    timeToFinishAlphabet = millis() + 600;
-    timeToFinishGame = millis() + 5000;*/
   }
   PT_END(pt);
 }
