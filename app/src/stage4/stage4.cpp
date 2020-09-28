@@ -4,6 +4,7 @@
 #include "../inputs/buttons.h"
 #include "../inputs/rfid.h"
 #include "../inputs/mic.h"
+#include "../inputs/rotatory_encoder.h"
 #include "../outputs/lcd.h"
 #include "../outputs/buzzer.h"
 #include "../outputs/led_rgb.h"
@@ -32,22 +33,19 @@ int schedule_stage4_status(struct pt *pt) {
       allOk = false;
       led_array_set(0, LOW);
     }
-
-    Serial.println(getMicDigital());
-    Serial.println(getMicAnalog());
-    if (getMicDigital()) {
+    if (getRotatoryEncoder()) {
       led_array_set(1, HIGH);
     } else {
       allOk = false;
       led_array_set(1, LOW);
     }
-    if (false) { // TODO led orientation N?
+    if (getJoystickSw()) {
       led_array_set(2, HIGH);
     } else {
       allOk = false;
       led_array_set(2, LOW);
     }
-    if (getJoystickSw() == LOW) {
+    if (getMicDigital()) {
       led_array_set(3, HIGH);
     } else {
       allOk = false;

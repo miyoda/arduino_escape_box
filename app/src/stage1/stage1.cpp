@@ -8,6 +8,7 @@
 #include "stage1.h"
 #include "morse_button.h"
 #include "rfid_identify_keychain.h"
+#include "rotatory_code.h"
 
 
 static struct pt pt_stage1_status; 
@@ -29,14 +30,25 @@ int schedule_stage1_status(struct pt *pt) {
   
   for(;;) {
     PT_SLEEP(pt, 1000);
+    bool allOk = true;
     if (is_morse_button_passed()) {
       led_array_set(0, HIGH);
+    } else {
+      allOk = false;
     }
     if (is_rfid_identify_keychain_passed()) {
       led_array_set(1, HIGH);
+    } else {
+      allOk = false;
     }
-    // TODO 2 leds
-    if (is_morse_button_passed() && is_rfid_identify_keychain_passed()) { // TODO 2 leds
+    if (is_rotatory_code_passed()) {
+      led_array_set(2, HIGH);
+    } else {
+      allOk = false;
+    }
+    // TODO 1 led (toc toc)
+    
+    if (allOk) {
       PT_SLEEP(pt, 1000);
       setCurrentStage(STAGE2);
     }
