@@ -7,14 +7,13 @@
 #include "../outputs/buzzer.h"
 #include "../outputs/led_array.h"
 
-static struct pt pt_rfid_identify_keychain_finish_game;
+static struct pt pt_rfid_identify_keychain;
 static bool rfid_identify_keychain_passed = false;
 
-//static byte whiteCardUUID[4] = {0x69, 0x6C, 0x58, 0xB3}; // Lavero
-static byte keychainCardUUID[4] = {0x43, 0x46, 0xE2, 0x39}; // Tarjeta
+static byte blueKeychainUUID[4] = {0x43, 0x46, 0xE2, 0x39};
 
 void setup_rfid_identify_keychain() {
-  PT_INIT(&pt_rfid_identify_keychain_finish_game);
+  PT_INIT(&pt_rfid_identify_keychain);
 }
 
 bool is_rfid_identify_keychain_passed() {
@@ -27,7 +26,7 @@ int schedule_rfid_identify_keychain_finish_game(struct pt *pt) {
   for(;;) {
     PT_SLEEP(pt, 1000);
     if (isRfidCardPresent()) {
-      if(isRfidPresentCardUUID(keychainCardUUID)) {
+      if(isRfidPresentCardUUID(blueKeychainUUID)) {
         playMelody(MELODY_SUCCESS);
         rfid_identify_keychain_passed = true;
       } else {
@@ -40,6 +39,6 @@ int schedule_rfid_identify_keychain_finish_game(struct pt *pt) {
 
 void loop_rfid_identify_keychain() {
   if (!rfid_identify_keychain_passed) {
-    PT_SCHEDULE(schedule_rfid_identify_keychain_finish_game(&pt_rfid_identify_keychain_finish_game));
+    PT_SCHEDULE(schedule_rfid_identify_keychain_finish_game(&pt_rfid_identify_keychain));
   }
 }
