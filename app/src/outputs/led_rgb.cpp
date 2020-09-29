@@ -5,9 +5,9 @@
 
 static struct pt pt_led_rgb; 
 
-int const PIN_LED_RGB_RED = 2;
-int const PIN_LED_RGB_GREEN = 3;
-int const PIN_LED_RGB_BLUE = 4;
+int const PIN_LED_RGB_RED = 11;
+int const PIN_LED_RGB_GREEN = 12;
+int const PIN_LED_RGB_BLUE = 13;
 
 int redValue = 0, greenValue = 0, blueValue = 0;
 

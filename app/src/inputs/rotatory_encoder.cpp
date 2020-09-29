@@ -7,18 +7,28 @@
   https://zaragozamakerspace.com/index.php/introduccion-al-rotary-encoder/
 */
 
-enum Rotation {NONE, CLOCKWISE, COUNTERCLOCKWISE};
+int const PIN_ROTATORY_ENCODER_SW = 4;
+int const PIN_ROTATORY_ENCODER_DT = 3;
+int const PIN_ROTATORY_ENCODER_CLK = 2;
 
-int const PIN_ROTATORY_ENCODER_SW = 11;
-int const PIN_ROTATORY_ENCODER_DT = 12;
-int const PIN_ROTATORY_ENCODER_CLK = 13;
+static int lastRotatoryEncoderValue, rotatoryEncoderPos = 0;
 
-static int lastRotatoryEncoderValue = 0;
+void isr() {
+  int newDt = digitalRead(PIN_ROTATORY_ENCODER_DT);
+  int newClk = digitalRead(PIN_ROTATORY_ENCODER_CLK);
+  if (newDt != newClk) {
+    rotatoryEncoderPos++;
+  } else {
+    rotatoryEncoderPos--;
+  }
+  Serial.print("RotatoryEncoder: "); Serial.print((newDt != newClk) ? "> " : "< "); Serial.println(rotatoryEncoderPos);
+}
 
 void setup_rotatory_encoder() {
-  pinMode (PIN_ROTATORY_ENCODER_SW, INPUT_PULLUP);
-  pinMode (PIN_ROTATORY_ENCODER_CLK, INPUT);
-  pinMode (PIN_ROTATORY_ENCODER_DT, INPUT);
+  pinMode(PIN_ROTATORY_ENCODER_SW, INPUT_PULLUP);
+  pinMode(PIN_ROTATORY_ENCODER_DT, INPUT_PULLUP);
+  pinMode(PIN_ROTATORY_ENCODER_CLK, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(PIN_ROTATORY_ENCODER_CLK), isr, CHANGE);
 
   lastRotatoryEncoderValue = digitalRead(PIN_ROTATORY_ENCODER_DT);
 }
@@ -27,18 +37,12 @@ int getRotatoryEncoderButton() {
   return digitalRead(PIN_ROTATORY_ENCODER_SW) == LOW;
 }
 
-Rotation getRotatoryEncoderDirection() {
-  int dt = digitalRead(PIN_ROTATORY_ENCODER_DT);
-  if (lastRotatoryEncoderValue != dt) {
-    lastRotatoryEncoderValue = dt;
-    if (digitalRead(PIN_ROTATORY_ENCODER_CLK) != dt) {
-      return Rotation.CLOCKWISE;
-    } else {
-      return Rotation.COUNTERCLOCKWISE;
-    }
-  } else {
-    return Rotation.NONE;
-  }
+int getRotatoryEncoderPosition() {
+  return rotatoryEncoderPos;
+}
+
+void resetRotatoryEncoderPosition() {
+  rotatoryEncoderPos = 0;
 }
 
 void loop_rotatory_encoder() {

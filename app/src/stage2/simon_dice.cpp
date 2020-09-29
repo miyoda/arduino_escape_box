@@ -72,7 +72,7 @@ int getJoystickLed(int joystickX, int joystickY) {
 }
 
 
-void failGame() {
+void failSimonDiceGame() {
   timeToFinishSimonDiceGame = 0;
   resetDefaultLcdText();
   playMelody(MELODY_FAILURE);
@@ -108,7 +108,7 @@ int schedule_simon_dice(struct pt *pt) {
         PT_SLEEP(pt, 200);
         if (currentSimonDiceCode[j] != currentSimonLed) {
           fail = true;
-          failGame();
+          failSimonDiceGame();
         }
       }
       PT_SLEEP(pt, 600);
@@ -126,7 +126,7 @@ int schedule_simon_dice_finish_game(struct pt *pt) {
   PT_BEGIN(pt);
   for(;;) {
     PT_WAIT_UNTIL(pt, timeToFinishSimonDiceGame != 0 && millis() > timeToFinishSimonDiceGame);
-    failGame();
+    failSimonDiceGame();
     PT_RESTART(&pt_simon_dice);
   }
   PT_END(pt);

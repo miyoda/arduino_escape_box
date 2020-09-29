@@ -3,10 +3,9 @@
 #include <Arduino.h>
 #include "../outputs/lcd.h"
 #include "../outputs/buzzer.h"
-#include "../outputs/led_rgb.h"
 #include "../outputs/led_array.h"
 #include "stage_win.h"
-#include "../stageX/keyboard_pin.h"
+#include "../stageX/keyboard_code.h"
 
 
 static struct pt pt_stage_win_status; 

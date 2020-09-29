@@ -19,6 +19,16 @@
     "__string": "cpp",
     "algorithm": "cpp",
     "bitset": "cpp",
-    "utility": "cpp"
+    "utility": "cpp",
+    "__functional_base": "cpp",
+    "__node_handle": "cpp",
+    "__memory": "cpp",
+    "functional": "cpp",
+    "limits": "cpp",
+    "memory": "cpp",
+    "optional": "cpp",
+    "ratio": "cpp",
+    "tuple": "cpp",
+    "type_traits": "cpp"
   }
 }

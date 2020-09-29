@@ -5,6 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/app",
                 "${workspaceFolder}/app/**",
+                "/Users/mahernandez/Documents/Arduino/libraries",
                 "/Users/mahernandez/Library/Arduino15/staging/libraries",
                 "/Applications/Arduino.app/Contents/Java/tools/**",
                 "/Applications/Arduino.app/Contents/Java/hardware/arduino/avr/**"

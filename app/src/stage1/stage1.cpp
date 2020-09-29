@@ -3,7 +3,6 @@
 #include <Arduino.h>
 #include "../outputs/lcd.h"
 #include "../outputs/buzzer.h"
-#include "../outputs/led_rgb.h"
 #include "../outputs/led_array.h"
 #include "stage1.h"
 #include "morse_button.h"
@@ -18,6 +17,7 @@ void setup_stage1() {
 
   setup_morse_button();
   setup_rfid_identify_keychain();
+  setup_rotatory_code();
 }
 
 int schedule_stage1_status(struct pt *pt) {
@@ -59,6 +59,7 @@ int schedule_stage1_status(struct pt *pt) {
 void loop_stage1() {
   loop_morse_button();
   loop_rfid_identify_keychain();
+  loop_rotatory_code();
 
   PT_SCHEDULE(schedule_stage1_status(&pt_stage1_status));
 }

@@ -37,8 +37,7 @@ void getMPUSlope(int slope[2]) {
   slope[1] = atan(ay / sqrt(pow(ax, 2) + pow(az, 2)))*(180.0 / 3.14);
 }
 
-
-int printAll() {
+int printAllMPU() {
   int ax, ay, az;
   int gx, gy, gz;
 	mpu.getRotation(&gx, &gy, &gz);

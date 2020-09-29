@@ -7,10 +7,9 @@
 #include "../inputs/rotatory_encoder.h"
 #include "../outputs/lcd.h"
 #include "../outputs/buzzer.h"
-#include "../outputs/led_rgb.h"
 #include "../outputs/led_array.h"
 #include "stage4.h"
-#include "../stageX/keyboard_pin.h"
+#include "../stageX/keyboard_code.h"
 
 
 static struct pt pt_stage4_status; 
@@ -33,7 +32,7 @@ int schedule_stage4_status(struct pt *pt) {
       allOk = false;
       led_array_set(0, LOW);
     }
-    if (getRotatoryEncoder()) {
+    if (getRotatoryEncoderButton()) {
       led_array_set(1, HIGH);
     } else {
       allOk = false;

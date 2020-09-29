@@ -3,9 +3,8 @@
 #include <Arduino.h>
 #include "outputs/lcd.h"
 #include "outputs/buzzer.h"
-#include "outputs/led_rgb.h"
 #include "outputs/led_array.h"
-#include "stageX/keyboard_pin.h"
+#include "stageX/keyboard_code.h"
 #include "stageX/rotation_alert.h"
 #include "stage1/stage1.h"
 #include "stage2/stage2.h"
@@ -54,7 +53,7 @@ void setCurrentStage(GameStage gameStage) {
 void setup_game() {
   PT_INIT(&pt_game_time);
 
-  setup_keyboard_pin();
+  setup_keyboard_code();
   setup_rotation_alert();
 
   pinMode(LED_BUILTIN, OUTPUT);
@@ -90,7 +89,7 @@ int schedule_game_time(struct pt *pt) {
 void loop_game() {
   PT_SCHEDULE(schedule_game_time(&pt_game_time));
 
-  loop_keyboard_pin();
+  loop_keyboard_code();
   loop_rotation_alert();
   if (currentStage == STAGE1) {
     loop_stage1();
