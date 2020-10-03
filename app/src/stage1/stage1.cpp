@@ -4,6 +4,7 @@
 #include "../outputs/lcd.h"
 #include "../outputs/buzzer.h"
 #include "../outputs/led_array.h"
+#include "../outputs/servo0.h"
 #include "stage1.h"
 #include "morse_button.h"
 #include "rfid_identify_keychain.h"
@@ -18,6 +19,8 @@ void setup_stage1() {
   setup_morse_button();
   setup_rfid_identify_keychain();
   setup_rotatory_code();
+
+  setServo0Position(0);
 }
 
 int schedule_stage1_status(struct pt *pt) {
@@ -29,6 +32,7 @@ int schedule_stage1_status(struct pt *pt) {
   led_array_set(3, LOW); // TODO: caja fuerte potenciometro electrico??
   
   for(;;) {
+
     PT_SLEEP(pt, 1000);
     bool allOk = true;
     if (is_morse_button_passed()) {

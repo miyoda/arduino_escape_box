@@ -129,6 +129,13 @@ static Melody MELODY_SUCCESS = {
   .length = 4
 };
 
+
+static Melody MELODY_WIN = {
+  .notes = {NOTE_F6, NOTE_F6, NOTE_F6, NOTE_E6, NOTE_F6, NOTE_F6, NOTE_F6, NOTE_E6},
+  .durations = {100, 100, 100, 200, 100, 100, 100, 200},
+  .length = 8
+};
+
 void playMelody(Melody newMelody);
 void playNote(int note);
 void stopBuzzer();

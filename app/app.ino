@@ -4,6 +4,7 @@
 #include "src/outputs/led_array.h"
 #include "src/outputs/led_simon.h"
 #include "src/outputs/lcd.h"
+#include "src/outputs/servo0.h"
 #include "src/outputs/buzzer.h"
 #include "src/inputs/buttons.h"
 #include "src/inputs/rfid.h"
@@ -22,6 +23,7 @@ void setup() {
   setup_led_simon();
   setup_lcd();
   setup_buzzer();
+  setup_servo0();
 
   // setup inputs
   setup_buttons();
@@ -43,6 +45,7 @@ void loop() {
   loop_led_array();
   loop_led_simon();
   loop_buzzer();
+  loop_servo0();
 
   // loop inputs
   loop_rfid();

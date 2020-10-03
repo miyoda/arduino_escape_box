@@ -85,6 +85,18 @@ int schedule_simon_dice(struct pt *pt) {
   PT_BEGIN(pt);
   for(;;) {
     PT_WAIT_UNTIL(pt, getJoystickSw());
+    led_simon_set(0, HIGH);
+    led_simon_set(1, HIGH);
+    led_simon_set(2, HIGH);
+    led_simon_set(3, HIGH);
+    PT_SLEEP(pt, 200);
+
+    led_simon_set(0, LOW);
+    led_simon_set(1, LOW);
+    led_simon_set(2, LOW);
+    led_simon_set(3, LOW);
+    PT_SLEEP(pt, 100);
+
     setRandomSimonDiceCode();
     fail = false;
     for (i=0; i<SIMON_DICE_LENGTH && !fail; i++) {

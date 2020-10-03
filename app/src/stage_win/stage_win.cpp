@@ -4,6 +4,7 @@
 #include "../outputs/lcd.h"
 #include "../outputs/buzzer.h"
 #include "../outputs/led_array.h"
+#include "../outputs/servo0.h"
 #include "stage_win.h"
 #include "../stageX/keyboard_code.h"
 
@@ -12,6 +13,9 @@ static struct pt pt_stage_win_status;
 
 void setup_stage_win() {
   PT_INIT(&pt_stage_win_status);
+
+  setServo0Position(180);
+  playMelody(MELODY_WIN);
 }
 
 int schedule_stage_win_status(struct pt *pt) {

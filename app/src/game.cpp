@@ -1,9 +1,11 @@
 #include <protothreads.h>
 #include "game.h"
 #include <Arduino.h>
+#include "inputs/buttons.h"
 #include "outputs/lcd.h"
 #include "outputs/buzzer.h"
 #include "outputs/led_array.h"
+#include "outputs/led_simon.h"
 #include "stageX/keyboard_code.h"
 #include "stageX/rotation_alert.h"
 #include "stage1/stage1.h"
@@ -24,7 +26,7 @@ void resetDefaultLcdText() {
   if (currentStage == STAGE1) {
     setLcdLine0Text("Stage 1");
   } else if (currentStage == STAGE2) {
-    setLcdLine0Text("Stage 2");
+    setLcdLine0Text("Stage 2 (12379)");
   } else if (currentStage == STAGE3) {
     setLcdLine0Text("Stage 3");
   } else if (currentStage == STAGE4) {
@@ -79,8 +81,10 @@ int schedule_game_time(struct pt *pt) {
   getFormatedTime(timeText);
   setLcdLine1Text(timeText);
   for(;;) {
-    getFormatedTime(timeText);
-    
+    if (currentStage != STAGE_WIN) {
+      getFormatedTime(timeText);
+    }
+
     PT_SLEEP(pt, 30);
   }
   PT_END(pt);
