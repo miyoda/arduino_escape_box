@@ -7,9 +7,9 @@
   https://zaragozamakerspace.com/index.php/introduccion-al-rotary-encoder/
 */
 
-int const PIN_ROTATORY_ENCODER_SW = 4;
-int const PIN_ROTATORY_ENCODER_DT = 3;
-int const PIN_ROTATORY_ENCODER_CLK = 2;
+int const PIN_ROTATORY_ENCODER_SW = 5;
+int const PIN_ROTATORY_ENCODER_DT = 4;
+int const PIN_ROTATORY_ENCODER_CLK = 3;
 
 static int lastRotatoryEncoderValue, rotatoryEncoderPos = 0;
 

@@ -28,9 +28,9 @@ void resetDefaultLcdText() {
   } else if (currentStage == STAGE2) {
     setLcdLine0Text("Stage 2 (12379)");
   } else if (currentStage == STAGE3) {
-    setLcdLine0Text("Stage 3");
+    setLcdLine0Text("Stage 3 (7523)");
   } else if (currentStage == STAGE4) {
-    setLcdLine0Text("Stage 4");
+    setLcdLine0Text("Solicitar apertura: boton (x3) + OK");
   } else if (currentStage == STAGE_WIN) {
     setLcdLine0Text("You win!");
   }
@@ -72,7 +72,8 @@ void getFormatedTime(char *text) {
   seconds %= 60;
   int hours = minutes / 60;
   minutes %= 60;
-  sprintf(text, "%dh %dm %ds %d",  hours, minutes, seconds, milliseconds);
+  sprintf(text, "%dh %dm %ds",  hours, minutes, seconds);
+  //sprintf(text, "%dh %dm %ds %d",  hours, minutes, seconds, milliseconds);
 }
 
 int schedule_game_time(struct pt *pt) {
@@ -85,7 +86,7 @@ int schedule_game_time(struct pt *pt) {
       getFormatedTime(timeText);
     }
 
-    PT_SLEEP(pt, 30);
+    PT_SLEEP(pt, 1000);
   }
   PT_END(pt);
 }

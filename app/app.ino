@@ -7,6 +7,7 @@
 #include "src/outputs/servo0.h"
 #include "src/outputs/buzzer.h"
 #include "src/inputs/buttons.h"
+#include "src/inputs/piezoelectric.h"
 #include "src/inputs/rfid.h"
 #include "src/inputs/mpu.h"
 #include "src/inputs/mic.h"
@@ -27,6 +28,7 @@ void setup() {
 
   // setup inputs
   setup_buttons();
+  setup_piezoelectric();
   setup_rfid();
   setup_mpu();
   setup_mic();
@@ -50,6 +52,7 @@ void loop() {
   // loop inputs
   loop_rfid();
   loop_buttons();
+  loop_piezoelectric();
   loop_mpu();
   loop_mic();
   loop_rotatory_encoder();

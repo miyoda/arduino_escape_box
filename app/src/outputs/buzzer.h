@@ -106,9 +106,9 @@ static Melody MELODY_SILENT = {
 };
 
 static Melody MELODY_INIT = {
-  .notes = {NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5, NOTE_A5, NOTE_B5, NOTE_C6},
-  .durations = {200, 200, 200, 200, 200, 200, 200, 200},
-  .length = 8
+  .notes = {NOTE_F6, NOTE_F6, NOTE_F6, NOTE_E6, NOTE_F6, NOTE_F6, NOTE_F6, NOTE_E6},
+  .durations = {100, 100, 100, 200, 100, 100, 100, 200},
+  .length = 1 //TODO 8 or change song
 };
 
 static Melody MELODY_KEY_PRESS = {
@@ -124,16 +124,25 @@ static Melody MELODY_FAILURE = {
 };
 
 static Melody MELODY_SUCCESS = {
+  .notes = {NOTE_G5, NOTE_B5, NOTE_CS6, NOTE_D6},
+  .durations = {300, 75, 75, 150},
+  .length = 4
+};
+
+static Melody MELODY_SUCCESS_OLD = {
   .notes = {NOTE_F6, NOTE_F6, NOTE_F6, NOTE_E6},
   .durations = {100, 100, 100, 200},
   .length = 4
 };
 
-
 static Melody MELODY_WIN = {
-  .notes = {NOTE_F6, NOTE_F6, NOTE_F6, NOTE_E6, NOTE_F6, NOTE_F6, NOTE_F6, NOTE_E6},
-  .durations = {100, 100, 100, 200, 100, 100, 100, 200},
-  .length = 8
+  .notes = {NOTE_G5, NOTE_G5, NOTE_G5, NOTE_FS5,  
+          NOTE_A5, NOTE_A5, NOTE_A5, NOTE_G5,   
+          NOTE_B5, NOTE_B5, NOTE_B5, NOTE_A5, NOTE_CS6, NOTE_D6},
+  .durations = {100, 100, 100, 200,
+          100, 100, 100, 200,
+          100, 100, 100, 200, 100, 100},
+  .length = 14
 };
 
 void playMelody(Melody newMelody);

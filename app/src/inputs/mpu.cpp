@@ -14,29 +14,6 @@ void printTab(){
 	Serial.print(F("\t"));
 }
 
-void getMPURotation(int rotation[3]) {
-  int gx, gy, gz;
-  mpu.getRotation(&gx, &gy, &gz);
-  rotation[0] = gx * gyroScale;
-  rotation[1] = gy * gyroScale;
-  rotation[2] = gz * gyroScale;
-}
-
-void getAcceleration(int acceleration[3]) {
-  int ax, ay, az;
-  mpu.getAcceleration(&ax, &ay, &az);
-  acceleration[0] = ax * accScale;
-  acceleration[1] = ay * accScale;
-  acceleration[2] = az * accScale;
-}
-
-void getMPUSlope(int slope[2]) {
-  int ax, ay, az;
-  mpu.getAcceleration(&ax, &ay, &az);
-  slope[0] = atan(ax / sqrt(pow(ay, 2) + pow(az, 2)))*(180.0 / 3.14);
-  slope[1] = atan(ay / sqrt(pow(ax, 2) + pow(az, 2)))*(180.0 / 3.14);
-}
-
 int printAllMPU() {
   int ax, ay, az;
   int gx, gy, gz;
@@ -65,6 +42,30 @@ int printAllMPU() {
   Serial.print(accel_ang_x);
   Serial.print(F("\tInclinacion en Y:"));
   Serial.println(accel_ang_y);
+}
+
+
+void getMPURotation(int rotation[3]) {
+  int gx, gy, gz;
+  mpu.getRotation(&gx, &gy, &gz);
+  rotation[0] = gx * gyroScale;
+  rotation[1] = gy * gyroScale;
+  rotation[2] = gz * gyroScale;
+}
+
+void getAcceleration(int acceleration[3]) {
+  int ax, ay, az;
+  mpu.getAcceleration(&ax, &ay, &az);
+  acceleration[0] = ax * accScale;
+  acceleration[1] = ay * accScale;
+  acceleration[2] = az * accScale;
+}
+
+void getMPUSlope(int slope[2]) {
+  int ax, ay, az;
+  mpu.getAcceleration(&ax, &ay, &az);
+  slope[0] = atan(ax / sqrt(pow(ay, 2) + pow(az, 2)))*(180.0 / 3.14);
+  slope[1] = atan(ay / sqrt(pow(ax, 2) + pow(az, 2)))*(180.0 / 3.14);
 }
 
 void setup_mpu() {

@@ -9,7 +9,7 @@
 #include "morse_button.h"
 #include "rfid_identify_keychain.h"
 #include "rotatory_code.h"
-
+#include "knock_code.h"
 
 static struct pt pt_stage1_status; 
 
@@ -19,13 +19,14 @@ void setup_stage1() {
   setup_morse_button();
   setup_rfid_identify_keychain();
   setup_rotatory_code();
+  setup_knock_code();
 
   setServo0Position(0);
 }
 
 int schedule_stage1_status(struct pt *pt) {
   PT_BEGIN(pt);
-  led_array_showAnimation(3000);
+  led_array_showAnimation(5000);
   led_array_set(0, LOW); // morse_button
   led_array_set(1, LOW); // rfid_identify_keychain
   led_array_set(2, LOW); // TODO: Toc toc??
@@ -50,7 +51,11 @@ int schedule_stage1_status(struct pt *pt) {
     } else {
       allOk = false;
     }
-    // TODO 1 led (toc toc)
+    if (is_knock_code_passed()) {
+      led_array_set(3, HIGH);
+    } else {
+      allOk = false;
+    }
     
     if (allOk) {
       PT_SLEEP(pt, 1000);
@@ -64,6 +69,7 @@ void loop_stage1() {
   loop_morse_button();
   loop_rfid_identify_keychain();
   loop_rotatory_code();
+  loop_knock_code();
 
   PT_SCHEDULE(schedule_stage1_status(&pt_stage1_status));
 }

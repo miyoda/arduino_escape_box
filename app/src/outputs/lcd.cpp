@@ -19,8 +19,8 @@ using namespace std;
 
 
 int const PIN_LCD_D7 = 29;
-int const PIN_LCD_D6 = 28;
-int const PIN_LCD_D5 = 27;
+int const PIN_LCD_D6 = 27;
+int const PIN_LCD_D5 = 28;
 int const PIN_LCD_D4 = 26;
 int const PIN_LCD_ENABLE = 25;
 int const PIN_LCD_RS = 24;

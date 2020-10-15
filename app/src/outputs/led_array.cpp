@@ -5,7 +5,7 @@
 
 static struct pt pt_led_array; 
 
-int const PIN_LED_ARRAY[] = {34, 35, 36, 37};
+int const PIN_LED_ARRAY[] = {37, 34, 35, 36};
 int const NUM_LEDS = sizeof(PIN_LED_ARRAY) / sizeof(PIN_LED_ARRAY[0]);
 
 int ledArrayStatus[] {LOW, LOW, LOW, LOW};
@@ -49,17 +49,17 @@ int schedule_led_array(struct pt *pt) {
   for(;;) {
     while (showAnimationUntil > 0) {
       digitalWriteLedArray(HIGH,LOW,LOW,LOW);
-      PT_SLEEP(pt, 50);
+      PT_SLEEP(pt, 100);
       digitalWriteLedArray(LOW,HIGH,LOW,LOW);
-      PT_SLEEP(pt, 50);
+      PT_SLEEP(pt, 100);
       digitalWriteLedArray(LOW,LOW,HIGH,LOW);
-      PT_SLEEP(pt, 50);
+      PT_SLEEP(pt, 100);
       digitalWriteLedArray(LOW,LOW,LOW,HIGH);
-      PT_SLEEP(pt, 50);
+      PT_SLEEP(pt, 100);
       digitalWriteLedArray(LOW,LOW,HIGH,LOW);
-      PT_SLEEP(pt, 50);
+      PT_SLEEP(pt, 100);
       digitalWriteLedArray(LOW,HIGH,LOW,LOW);
-      PT_SLEEP(pt, 50);
+      PT_SLEEP(pt, 100);
       if (showAnimationUntil < millis()) {
         showAnimationUntil = 0;
       }

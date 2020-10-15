@@ -46,6 +46,7 @@ int schedule_keyboard_code(struct pt *pt) {
     PT_WAIT_UNTIL(pt, pressedKey0 = get_keypad_abcd09_key());
     if (pressedKey0 == 'A' || pressedKey0 == 'B' || pressedKey0 == 'C' || pressedKey0 == 'D' || pressedKey0 == '*' || pressedKey0 == '#') {
       playMelody(MELODY_KEY_PRESS);
+      Serial.println(pressedKey0);
       PT_WAIT_UNTIL(pt, pressedKey1 = get_keypad_abcd09_key());
       playMelody(MELODY_KEY_PRESS);
       PT_WAIT_UNTIL(pt, pressedKey2 = get_keypad_abcd09_key());

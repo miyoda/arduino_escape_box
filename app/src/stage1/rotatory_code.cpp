@@ -51,7 +51,7 @@ int schedule_rotatory_code(struct pt *pt) {
   PT_BEGIN(pt);
   for(;;) {
     PT_WAIT_UNTIL(pt, getRotatoryEncoderButton());
-    currentRotatoryRotationAsc = true;
+    currentRotatoryRotationAsc = false;
     currentRotatoryCodeDigit = 0;
     currentRotatoryCode[0] = 0;
     resetRotatoryEncoderPosition();
@@ -59,9 +59,9 @@ int schedule_rotatory_code(struct pt *pt) {
     playNote(NOTE_G5);
     PT_SLEEP(pt, 100);
     stopBuzzer();
-
+    PT_WAIT_UNTIL(pt, !getRotatoryEncoderButton());
+    timeToFinishRotatoryCodeGame = millis() + 4000;  
     for(currentRotatoryCodeDigit=0; currentRotatoryCodeDigit<4;) {
-      timeToFinishRotatoryCodeGame = millis() + 4000;
       PT_SLEEP(pt, 100);
       int newPosition = getRotatoryEncoderPosition() / 3;
       if (newPosition != currentRotatoryCode[currentRotatoryCodeDigit]) {
@@ -77,6 +77,7 @@ int schedule_rotatory_code(struct pt *pt) {
         PT_SLEEP(pt, 20);
         stopBuzzer();
         printLcd();
+        timeToFinishRotatoryCodeGame = millis() + 4000;
       }
       if (currentRotatoryCodeDigit >= 3) { // Check solution
         bool codeOk = true;
@@ -101,7 +102,7 @@ int schedule_rotatory_code(struct pt *pt) {
 int schedule_rotatory_code_finish_game(struct pt *pt) {
   PT_BEGIN(pt);
   for(;;) {
-    PT_WAIT_UNTIL(pt, timeToFinishRotatoryCodeGame != 0 && (millis() > timeToFinishRotatoryCodeGame));
+    PT_WAIT_UNTIL(pt, timeToFinishRotatoryCodeGame != 0 && (getRotatoryEncoderButton() || (millis() > timeToFinishRotatoryCodeGame)));
     failRotatoryCodeGame();
     PT_RESTART(&pt_rotatory_code);
   }

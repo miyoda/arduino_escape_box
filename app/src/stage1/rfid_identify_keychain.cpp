@@ -20,11 +20,11 @@ bool is_rfid_identify_keychain_passed() {
   return rfid_identify_keychain_passed;
 }
 
-int schedule_rfid_identify_keychain_finish_game(struct pt *pt) {
+int schedule_rfid_identify_keychain(struct pt *pt) {
   PT_BEGIN(pt);
   PT_SLEEP(pt, 3000);
   for(;;) {
-    PT_SLEEP(pt, 1000);
+    PT_SLEEP(pt, 1500);
     if (isRfidCardPresent()) {
       if(isRfidPresentCardUUID(blueKeychainUUID)) {
         playMelody(MELODY_SUCCESS);
@@ -39,6 +39,6 @@ int schedule_rfid_identify_keychain_finish_game(struct pt *pt) {
 
 void loop_rfid_identify_keychain() {
   if (!rfid_identify_keychain_passed) {
-    PT_SCHEDULE(schedule_rfid_identify_keychain_finish_game(&pt_rfid_identify_keychain));
+    PT_SCHEDULE(schedule_rfid_identify_keychain(&pt_rfid_identify_keychain));
   }
 }

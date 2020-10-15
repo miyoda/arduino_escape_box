@@ -24,10 +24,11 @@ int schedule_rotation_alert(struct pt *pt) {
       PT_SLEEP(pt, 2000);
     }
     getMPUSlope(slope);
-    if (abs(slope[0]) > 5 || abs(slope[1]) > 5) {
+    if (abs(slope[0]) > 8 || abs(slope[1]) > 8) {
       rotation_alert_active = true;
       setLcdLine0Text("Tilt the box is not allowed");
       playNote(NOTE_F6);
+      printAllMPU();
       PT_SLEEP(pt, 100);
       stopBuzzer();
       PT_SLEEP(pt, 30);
