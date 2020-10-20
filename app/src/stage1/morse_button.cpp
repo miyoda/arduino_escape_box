@@ -37,10 +37,10 @@ char readio(int signal_len) {
 int schedule_morse_button(struct pt *pt) {
   PT_BEGIN(pt);
   for(;;) {
-    PT_WAIT_UNTIL(pt, getButton1());
+    PT_WAIT_UNTIL(pt, getButtonExternal());
     playNote(NOTE_E5);
     t1 = millis();
-    PT_WAIT_UNTIL(pt, !getButton1());
+    PT_WAIT_UNTIL(pt, !getButtonExternal());
     stopBuzzer();
     t2 = millis();
     Serial.print(readio(t2-t1));
@@ -59,7 +59,7 @@ int schedule_morse_button_finish_alphabet(struct pt *pt) {
     strcat(currentWord, morse_to_char(currentMorseCode));
     strcpy(currentMorseCode, "");
     setLcdLine0Text(currentWord);
-    PT_WAIT_UNTIL(pt, getButton1());
+    PT_WAIT_UNTIL(pt, getButtonExternal());
   }
   PT_END(pt);
 }

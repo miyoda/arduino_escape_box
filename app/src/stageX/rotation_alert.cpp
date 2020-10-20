@@ -26,7 +26,7 @@ int schedule_rotation_alert(struct pt *pt) {
     getMPUSlope(slope);
     if (abs(slope[0]) > 8 || abs(slope[1]) > 8) {
       rotation_alert_active = true;
-      setLcdLine0Text("Tilt the box is not allowed");
+      setLcdLine0Text("No se puede volcar la caja!");
       playNote(NOTE_F6);
       printAllMPU();
       PT_SLEEP(pt, 100);
@@ -43,5 +43,5 @@ int schedule_rotation_alert(struct pt *pt) {
 }
 
 void loop_rotation_alert() {
-  PT_SCHEDULE(schedule_rotation_alert(&pt_rotation_alert));
+  // TODO DISABLED PT_SCHEDULE(schedule_rotation_alert(&pt_rotation_alert));
 }

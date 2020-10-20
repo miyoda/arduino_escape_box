@@ -10,7 +10,7 @@
 int const KNOCK_CODE_THRESHOLD = 10;
 int const KNOCK_MIN_WAIT = 100;
 int const KNOCK_MAX_DURATION = 6000;
-static int VALID_KNOCK_CODE[] = {1, 2, 3, 4};
+static int VALID_KNOCK_CODE[] = {1, 0, 2, 0};
 
 static struct pt pt_knock_code, pt_knock_code_finish_game;
 static bool knock_code_passed = false;
@@ -28,10 +28,12 @@ bool is_knock_code_passed() {
   return knock_code_passed;
 }
 
-void failKnockCodeGame() {
+void failKnockCodeGame(bool sound) {
   timeToFinishKnockCodeGame = 0;
   resetDefaultLcdText();
-  playMelody(MELODY_FAILURE);
+  if (sound) {
+    playMelody(MELODY_FAILURE);
+  }
 }
 
 void printLcd(int currentKnockCodeDigit) {
@@ -59,6 +61,7 @@ void saveKnockCode(int currentKnockCodeDigit) {
 }
 
 int schedule_knock_code(struct pt *pt) {
+  static int i;
   PT_BEGIN(pt);
   PT_SLEEP(pt, 3000);
   for(;;) {
@@ -82,11 +85,17 @@ int schedule_knock_code(struct pt *pt) {
     saveKnockCode(3);
     PT_SLEEP(pt, KNOCK_MIN_WAIT);
     
-    bool codeOk = true;
-    for(int i=0; i<4 && codeOk; i++) {
-      codeOk = currentKnockCode[i] == VALID_KNOCK_CODE[i];
-    }
     PT_SLEEP(pt, 1000);
+    bool codeOk = true;
+    Serial.println("check");
+    Serial.println(codeOk);
+    for(int i=0; i<4 && codeOk; i++) {
+      Serial.println(i);
+      codeOk = currentKnockCode[i] == VALID_KNOCK_CODE[i];
+      Serial.println(codeOk);
+    }
+    Serial.println("check end");
+    Serial.println(codeOk);
     if (codeOk) {
       playMelody(MELODY_SUCCESS);
       PT_SLEEP(pt, 500);
@@ -94,7 +103,7 @@ int schedule_knock_code(struct pt *pt) {
       knock_code_passed = true;
       PT_RESTART(pt);
     } else {
-      failKnockCodeGame();
+      failKnockCodeGame(true);
     }
   }
   PT_END(pt);
@@ -104,14 +113,13 @@ int schedule_knock_code_finish_game(struct pt *pt) {
   PT_BEGIN(pt);
   for(;;) {
     PT_WAIT_UNTIL(pt, timeToFinishKnockCodeGame != 0 && (millis() > timeToFinishKnockCodeGame));
-    failKnockCodeGame();
+    failKnockCodeGame(false);
     PT_RESTART(&pt_knock_code);
   }
   PT_END(pt);
 }
 
 void loop_knock_code() {
-  Serial.println(getPiezoelectricAnalog());
   if (!knock_code_passed) {
     PT_SCHEDULE(schedule_knock_code(&pt_knock_code));
     PT_SCHEDULE(schedule_knock_code_finish_game(&pt_knock_code_finish_game));

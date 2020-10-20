@@ -1,6 +1,6 @@
 #include <protothreads.h>
 #include <Arduino.h>
-#include <IRremote.h>
+#include "lib/IRremote.h"
 
 int const PIN_IR_RECV = 7;
 

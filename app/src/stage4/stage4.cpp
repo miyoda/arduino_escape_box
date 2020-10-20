@@ -26,29 +26,38 @@ int schedule_stage4_status(struct pt *pt) {
     PT_SLEEP(pt, 200);
     bool allOk = true;
 
-    if (getButton1()) {
+    if (getButtonExternal()) {
       led_array_set(0, HIGH);
     } else {
       allOk = false;
       led_array_set(0, LOW);
     }
-    if (getRotatoryEncoderButton()) {
+    if (getButtonHidden()) {
       led_array_set(1, HIGH);
     } else {
       allOk = false;
       led_array_set(1, LOW);
     }
-    if (getJoystickSw()) {
+    if (getRotatoryEncoderButton()) {
       led_array_set(2, HIGH);
     } else {
       allOk = false;
       led_array_set(2, LOW);
     }
-    if (getMicDigital()) {
+    if (getJoystickSw()) {
       led_array_set(3, HIGH);
     } else {
       allOk = false;
       led_array_set(3, LOW);
+    }
+
+    if (getMicDigital()) {
+      led_array_set(1, HIGH);
+      led_array_set(2, HIGH);
+      led_array_set(3, HIGH);
+      led_array_set(4, HIGH);
+    } else {
+      allOk = false;
     }
 
     if (allOk) {

@@ -24,15 +24,15 @@ GameStage getCurrentStage() {
 
 void resetDefaultLcdText() {
   if (currentStage == STAGE1) {
-    setLcdLine0Text("Stage 1");
+    setLcdLine0Text("Fase 1");
   } else if (currentStage == STAGE2) {
-    setLcdLine0Text("Stage 2 (12379)");
+    setLcdLine0Text("Fase 2 (12379)");
   } else if (currentStage == STAGE3) {
-    setLcdLine0Text("Stage 3 (7523)");
+    setLcdLine0Text("Fase 3 (7523)");
   } else if (currentStage == STAGE4) {
-    setLcdLine0Text("Solicitar apertura: boton (x3) + OK");
+    setLcdLine0Text("Solicitar apertura: boton (x4) + OK");
   } else if (currentStage == STAGE_WIN) {
-    setLcdLine0Text("You win!");
+    setLcdLine0Text("Ganaste!");
   }
 }
 

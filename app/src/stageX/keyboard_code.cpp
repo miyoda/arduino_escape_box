@@ -56,16 +56,16 @@ int schedule_keyboard_code(struct pt *pt) {
       PT_WAIT_UNTIL(pt, pressedKey4 = get_keypad_abcd09_key());
       playMelody(MELODY_KEY_PRESS);
 
-      if (getCurrentStage() == STAGE3 && isPin("A0003")) {
+      if (getCurrentStage() == STAGE3 && isPin("A0686")) {
         playMelody(MELODY_SUCCESS);
         keyboard_code3A_passed = true;
-      } else if (getCurrentStage() == STAGE3 && isPin("B0003")) {
+      } else if (getCurrentStage() == STAGE3 && isPin("B8024")) {
         playMelody(MELODY_SUCCESS);
         keyboard_code3B_passed = true;
-      } else if (getCurrentStage() == STAGE3 && isPin("C0003")) {
+      } else if (getCurrentStage() == STAGE3 && isPin("C2017")) {
         playMelody(MELODY_SUCCESS);
         keyboard_code3C_passed = true;
-      } else if (getCurrentStage() == STAGE3 && isPin("D0003")) {
+      } else if (getCurrentStage() == STAGE3 && isPin("D2143")) {
         playMelody(MELODY_SUCCESS);
         keyboard_code3D_passed = true;
       } else if (isPin("*0001")) {

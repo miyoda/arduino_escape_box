@@ -81,7 +81,7 @@ int schedule_rotatory_code(struct pt *pt) {
       }
       if (currentRotatoryCodeDigit >= 3) { // Check solution
         bool codeOk = true;
-        for(int i=0; i<4 && codeOk; i++) {
+        for(i=0; i<4 && codeOk; i++) {
           codeOk = abs(currentRotatoryCode[i]) == VALID_ROTATORY_CODE[i];
         }
         if (codeOk) {
