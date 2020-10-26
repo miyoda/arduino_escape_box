@@ -45,7 +45,7 @@ int schedule_morse_button(struct pt *pt) {
     t2 = millis();
     Serial.print(readio(t2-t1));
     append(currentMorseCode, readio(t2-t1));
-    timeToFinishMorseButtonAlphabet = millis() + 600;
+    timeToFinishMorseButtonAlphabet = millis() + 1000;
     timeToFinishMorseButtonGame = millis() + 5000;
   }
   PT_END(pt);

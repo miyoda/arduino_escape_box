@@ -30,7 +30,7 @@ void resetDefaultLcdText() {
   } else if (currentStage == STAGE3) {
     setLcdLine0Text("Fase 3 (7523)");
   } else if (currentStage == STAGE4) {
-    setLcdLine0Text("Solicitar apertura: boton (x4) + OK");
+    setLcdLine0Text("Pulse todos los botones para abrir");
   } else if (currentStage == STAGE_WIN) {
     setLcdLine0Text("Ganaste!");
   }

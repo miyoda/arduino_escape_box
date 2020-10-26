@@ -51,14 +51,14 @@ int schedule_stage4_status(struct pt *pt) {
       led_array_set(3, LOW);
     }
 
-    if (getMicDigital()) {
+    /*if (getMicDigital()) { // NOT necessary now
       led_array_set(1, HIGH);
       led_array_set(2, HIGH);
       led_array_set(3, HIGH);
       led_array_set(4, HIGH);
     } else {
       allOk = false;
-    }
+    }*/
 
     if (allOk) {
       PT_SLEEP(pt, 1000);

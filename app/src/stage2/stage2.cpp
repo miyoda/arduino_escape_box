@@ -36,12 +36,6 @@ int schedule_stage2_status(struct pt *pt) {
     PT_SLEEP(pt, 200);
     bool allOk = true;
 
-    Serial.print("Buttons: ");
-    Serial.print(getButtonExternal());
-    Serial.print(getButtonHidden());
-    Serial.print(getWire1());
-    Serial.println(getWire2());
-
     if (is_simon_dice_passed()) {
       led_array_set(0, HIGH);
     } else {

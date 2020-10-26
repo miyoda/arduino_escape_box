@@ -24,21 +24,35 @@ int schedule_stage3_status(struct pt *pt) {
   
   for(;;) {
     PT_SLEEP(pt, 1000);
+    
+    bool allOk = true;
     if (is_keyboard_code3A_passed()) {
       led_array_set(0, HIGH);
+    } else {
+      allOk = false;
+      led_array_set(0, LOW);
     }
     if (is_keyboard_code3B_passed()) {
       led_array_set(1, HIGH);
+    } else {
+      allOk = false;
+      led_array_set(1, LOW);
     }
     if (is_keyboard_code3C_passed()) {
       led_array_set(2, HIGH);
+    } else {
+      allOk = false;
+      led_array_set(2, LOW);
     }
     if (is_keyboard_code3D_passed()) {
       led_array_set(3, HIGH);
+    } else {
+      allOk = false;
+      led_array_set(3, LOW);
     }
-    if (is_keyboard_code3A_passed() && is_keyboard_code3B_passed() && is_keyboard_code3C_passed() && is_keyboard_code3D_passed()) {
+    if (allOk) {
       PT_SLEEP(pt, 1000);
-      setCurrentStage(STAGE3);
+      setCurrentStage(STAGE4);
     }
   }
   

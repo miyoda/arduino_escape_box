@@ -26,8 +26,11 @@ int schedule_hidden_button(struct pt *pt) {
     PT_WAIT_UNTIL(pt, getButtonHidden());
     PT_SLEEP(pt, 100);
     if (getButtonHidden()) {
-      playMelody(MELODY_SUCCESS);
-      hidden_button_passed = true;
+      PT_SLEEP(pt, 20);
+      if (getButtonHidden()) {
+        playMelody(MELODY_SUCCESS);
+        hidden_button_passed = true;
+      }
     }
   }
   PT_END(pt);

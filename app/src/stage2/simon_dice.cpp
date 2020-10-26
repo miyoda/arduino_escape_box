@@ -10,7 +10,7 @@
 #include "../outputs/led_simon.h"
 
 
-static int const SIMON_DICE_LENGTH = 15;
+static int const SIMON_DICE_LENGTH = 8;
 static struct pt pt_simon_dice,pt_simon_dice_finish_game;
 static bool simon_dice_passed = false;
 static int currentSimonDiceCode[SIMON_DICE_LENGTH];

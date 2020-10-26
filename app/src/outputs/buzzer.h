@@ -2,6 +2,7 @@
 #define BUZZER_H
 
 
+#define NOTE_MUTE 28
 #define NOTE_B0  31
 #define NOTE_C1  33
 #define NOTE_CS1 35
@@ -106,9 +107,24 @@ static Melody MELODY_SILENT = {
 };
 
 static Melody MELODY_INIT = {
+  .notes = {
+    NOTE_G6, NOTE_G6, NOTE_AS6, NOTE_C7,
+    NOTE_G6, NOTE_G6, NOTE_F6, NOTE_FS6,
+    NOTE_G6, NOTE_G6, NOTE_AS6, NOTE_C7,
+    NOTE_G6, NOTE_G6, NOTE_F6, NOTE_FS6, NOTE_G6},
+  .durations = {
+    300, 300, 200, 200, 
+    300, 300, 200, 200, 
+    300, 300, 200, 200, 
+    300, 300, 200, 200, 300
+    },
+  .length = 17
+};
+
+static Melody MELODY_INIT_OLD = {
   .notes = {NOTE_F6, NOTE_F6, NOTE_F6, NOTE_E6, NOTE_F6, NOTE_F6, NOTE_F6, NOTE_E6},
   .durations = {100, 100, 100, 200, 100, 100, 100, 200},
-  .length = 1 //TODO 8 or change song
+  .length = 8
 };
 
 static Melody MELODY_KEY_PRESS = {

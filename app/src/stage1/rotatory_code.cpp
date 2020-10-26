@@ -8,7 +8,7 @@
 #include "../outputs/led_array.h"
 #include "../outputs/lcd.h"
 
-static int VALID_ROTATORY_CODE[] = {1, 2, 3, 4};
+static int VALID_ROTATORY_CODE[] = {7, 9, 3, 11};
 
 static struct pt pt_rotatory_code, pt_rotatory_code_finish_game;
 static bool rotatory_code_passed = false;
@@ -35,13 +35,13 @@ void failRotatoryCodeGame() {
 
 void printLcd() {
   if (currentRotatoryCodeDigit == 0) {
-    sprintf(rotatoryCodeLcdText, "CODE: %d", abs(currentRotatoryCode[0]));
+    sprintf(rotatoryCodeLcdText, "ROT: %d", abs(currentRotatoryCode[0]));
   } else if (currentRotatoryCodeDigit == 1) {
-    sprintf(rotatoryCodeLcdText, "CODE: %d %d", abs(currentRotatoryCode[0]), abs(currentRotatoryCode[1]));
+    sprintf(rotatoryCodeLcdText, "ROT: %d %d", abs(currentRotatoryCode[0]), abs(currentRotatoryCode[1]));
   } else if (currentRotatoryCodeDigit == 2) {
-    sprintf(rotatoryCodeLcdText, "CODE: %d %d %d", abs(currentRotatoryCode[0]), abs(currentRotatoryCode[1]), abs(currentRotatoryCode[2]));
+    sprintf(rotatoryCodeLcdText, "ROT: %d %d %d", abs(currentRotatoryCode[0]), abs(currentRotatoryCode[1]), abs(currentRotatoryCode[2]));
   } else if (currentRotatoryCodeDigit >= 3) {
-    sprintf(rotatoryCodeLcdText, "CODE: %d %d %d %d", abs(currentRotatoryCode[0]), abs(currentRotatoryCode[1]), abs(currentRotatoryCode[2]), abs(currentRotatoryCode[3]));
+    sprintf(rotatoryCodeLcdText, "ROT: %d %d %d %d", abs(currentRotatoryCode[0]), abs(currentRotatoryCode[1]), abs(currentRotatoryCode[2]), abs(currentRotatoryCode[3]));
   }
   setLcdLine0Text(rotatoryCodeLcdText);
 }
@@ -63,7 +63,7 @@ int schedule_rotatory_code(struct pt *pt) {
     timeToFinishRotatoryCodeGame = millis() + 4000;  
     for(currentRotatoryCodeDigit=0; currentRotatoryCodeDigit<4;) {
       PT_SLEEP(pt, 100);
-      int newPosition = getRotatoryEncoderPosition() / 3;
+      int newPosition = getRotatoryEncoderPosition();
       if (newPosition != currentRotatoryCode[currentRotatoryCodeDigit]) {
         int newRotationAsc = newPosition < currentRotatoryCode[currentRotatoryCodeDigit] ? true : false;
         if (newRotationAsc != currentRotatoryRotationAsc) {

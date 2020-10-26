@@ -7,7 +7,7 @@
 #include "../outputs/lcd.h"
 
 
-int const KNOCK_CODE_THRESHOLD = 10;
+int const KNOCK_CODE_THRESHOLD = 12;
 int const KNOCK_MIN_WAIT = 100;
 int const KNOCK_MAX_DURATION = 6000;
 static int VALID_KNOCK_CODE[] = {1, 0, 2, 0};

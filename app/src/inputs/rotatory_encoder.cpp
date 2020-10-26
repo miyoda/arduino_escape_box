@@ -12,14 +12,17 @@ int const PIN_ROTATORY_ENCODER_DT = 4;
 int const PIN_ROTATORY_ENCODER_CLK = 3;
 
 static int lastRotatoryEncoderValue, rotatoryEncoderPos = 0;
+static int dirRight = 0;
+static int dirLeft = 0;
+static bool pendingRead = true;
 
 void isr() {
   int newDt = digitalRead(PIN_ROTATORY_ENCODER_DT);
   int newClk = digitalRead(PIN_ROTATORY_ENCODER_CLK);
   if (newDt != newClk) {
-    rotatoryEncoderPos++;
+    dirRight++;
   } else {
-    rotatoryEncoderPos--;
+    dirLeft++;
   }
   Serial.print("RotatoryEncoder: "); Serial.print((newDt != newClk) ? "> " : "< "); Serial.println(rotatoryEncoderPos);
 }
@@ -38,6 +41,16 @@ int getRotatoryEncoderButton() {
 }
 
 int getRotatoryEncoderPosition() {
+  if (dirRight != dirLeft && (dirRight + dirLeft) > 6) {
+    if (dirRight > dirLeft) {
+      rotatoryEncoderPos++;
+    } else {
+      rotatoryEncoderPos--;
+    }
+    pendingRead = true;
+    dirRight = 0;
+    dirLeft = 0;
+  }
   return rotatoryEncoderPos;
 }
 
