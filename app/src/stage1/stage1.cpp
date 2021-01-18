@@ -27,10 +27,10 @@ void setup_stage1() {
 int schedule_stage1_status(struct pt *pt) {
   PT_BEGIN(pt);
   led_array_showAnimation(5000);
-  led_array_set(0, LOW); // morse_button
-  led_array_set(1, LOW); // rfid_identify_keychain
-  led_array_set(2, LOW); // TODO: Toc toc??
-  led_array_set(3, LOW); // TODO: caja fuerte potenciometro electrico??
+  led_array_set(0, LOW);
+  led_array_set(1, LOW);
+  led_array_set(2, LOW);
+  led_array_set(3, LOW);
   
   for(;;) {
 
